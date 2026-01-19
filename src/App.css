@@ -3,7 +3,7 @@
   text-align: center;
   display: flex;
   flex: 1;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .sideBar{
@@ -17,4 +17,21 @@ main {
   flex: 1;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  visibility: hidden;
+  gap: 8px;
+}
 
+form > span {
+  display: flex
+}
+
+form > span > label {
+  flex: 1;
+}
+
+form>span>input {
+  flex: 4;
+}

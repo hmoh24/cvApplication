@@ -8,6 +8,7 @@ const personalDetails = {
 const workExperience = {
   items: [
     {
+      id: "job-1",
       role: "Frontend Developer",
       companyName: "BrightPixel Ltd",
       dateStarted: "2022-03",
@@ -20,6 +21,7 @@ const workExperience = {
       ],
     },
     {
+      id: "job-2",
       role: "Junior Web Developer",
       companyName: "NorthCode Solutions",
       dateStarted: "2020-07",
@@ -37,6 +39,7 @@ const workExperience = {
 const education = {
   items: [
     {
+      id: "edu-1",
       qualification: "BSc Computer Science",
       institutionName: "University of Leeds",
       dateStarted: "2017-09",
@@ -48,6 +51,7 @@ const education = {
       ],
     },
     {
+      id: "edu-2",
       qualification: "A Levels",
       institutionName: "Greenwood Sixth Form College",
       dateStarted: "2015-09",
@@ -57,4 +61,5 @@ const education = {
   ],
 };
 
-export { personalDetails, workExperience, education };
+const data = { personalDetails, workExperience, education };
+export default data;
