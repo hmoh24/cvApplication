@@ -18,9 +18,8 @@ main {
 }
 
 form {
-  display: flex;
+  display: none;
   flex-direction: column;
-  visibility: hidden;
   gap: 8px;
 }
 
