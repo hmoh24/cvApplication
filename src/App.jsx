@@ -2,7 +2,7 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
-import Main from "./components/main";
+import Main from "./components/main/main";
 import PersonalFormSection from "./components/forms/personalFormSection";
 import data from "./components/cvData";
 import WorkExperienceFormSection from "./components/forms/workExperienceFormSection";

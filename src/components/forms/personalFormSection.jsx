@@ -1,6 +1,9 @@
+import { useState } from "react";
 import toggleElementVisibility from "../../util/toggleElementVisibility";
 
 function PersonalFormSection({ personalDetails, setPersonalDetails }) {
+  const [draft, setDraft] = useState(personalDetails);
+
   function handleSubmit(e) {
     e.preventDefault();
     //can generalise function to go through all input values and create object from the input values to repeat for other forms
@@ -16,6 +19,11 @@ function PersonalFormSection({ personalDetails, setPersonalDetails }) {
       location: location,
     }));
     toggleElementVisibility("personalForm");
+  }
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setDraft((d) => ({ ...d, [name]: value }));
   }
 
   return (
@@ -40,7 +48,8 @@ function PersonalFormSection({ personalDetails, setPersonalDetails }) {
             type="text"
             id="nameInput"
             name="name"
-            placeholder={personalDetails.name}
+            onChange={(e) => handleChange(e)}
+            value={draft.name}
           />
         </span>
         <span className="basicInputWrapper">
@@ -49,7 +58,8 @@ function PersonalFormSection({ personalDetails, setPersonalDetails }) {
             type="email"
             id="emailInput"
             name="email"
-            placeholder={personalDetails.email}
+            onChange={(e) => handleChange(e)}
+            value={draft.email}
           />
         </span>
         <span className="basicInputWrapper">
@@ -58,7 +68,8 @@ function PersonalFormSection({ personalDetails, setPersonalDetails }) {
             type="phone"
             id="phoneInput"
             name="phone"
-            placeholder={personalDetails.phone}
+            onChange={(e) => handleChange(e)}
+            value={draft.phone}
           />
         </span>
         <span className="basicInputWrapper">
@@ -67,7 +78,8 @@ function PersonalFormSection({ personalDetails, setPersonalDetails }) {
             type="text"
             id="locationInput"
             name="location"
-            placeholder={personalDetails.location}
+            onChange={(e) => handleChange(e)}
+            value={draft.location}
           />
         </span>
         <button type="submit">Submit Changes</button>

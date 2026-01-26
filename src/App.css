@@ -1,11 +1,3 @@
-#root {
-  margin: 0 ;
-  text-align: center;
-  display: flex;
-  flex: 1;
-  min-height: 100vh;
-}
-
 .sideBar{
   max-width: 500px;
   background-color: rgb(193, 237, 247);
@@ -15,22 +7,6 @@
 
 main {
   flex: 1;
+  padding: 20px 100px;
 }
 
-form {
-  display: none;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.basicInputWrapper {
-  display: flex
-}
-
-.basicInputWrapper > label {
-  flex: 1;
-}
-
-.basicInputWrapper>input {
-  flex: 4;
-}

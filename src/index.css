@@ -13,6 +13,13 @@
   --padding-standard: 24px;
 }
 
+#root {
+  margin: 0;
+  display: flex;
+  flex: 1;
+  min-height: 100vh;
+}
+
 h1 {
   margin: 0;
 }
@@ -39,6 +46,10 @@ h1 {
   line-height: 1.1;
 }
 
+h2, h3, h4, p {
+  margin: 0;
+}
+
 button {
   width: 100%;
   border-radius: 8px;
@@ -61,4 +72,40 @@ button:active {
 
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+
+form {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.basicInputWrapper {
+  display: flex
+}
+
+.basicInputWrapper>label {
+  flex: 1;
+}
+
+.basicInputWrapper>input {
+  flex: 4;
+}
+
+.cvSection {
+  border-bottom: 1px solid rgb(149, 149, 149);
+}
+
+.cvSection:last-of-type {
+  border-bottom: none;
+}
+
+.mainHeader {
+  text-align: start;
+}
+
+.mainGrid > section {
+  display: flex;
+  justify-content: space-between;
 }
