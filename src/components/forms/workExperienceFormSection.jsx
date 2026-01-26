@@ -1,39 +1,38 @@
+import { useState } from "react";
 import toggleElementVisibility from "../../util/toggleElementVisibility";
 
 function WorkExperienceFormSection({ workExperience, setWorkExperience }) {
+  const [draft, setDraft] = useState(workExperience);
+
   function handleSubmit(e) {
     e.preventDefault();
-    const newWorkExperienceState = { items: [] };
-    const workExperienceSections = [
-      ...document.getElementsByClassName("workExpSubsection"),
-    ];
-    workExperienceSections.forEach((job, index) => {
-      const role = document.getElementById(`role${job.id}`).value;
-      const company = document.getElementById(`company${job.id}`).value;
-      const dateStart = document.getElementById(`dateStart${job.id}`).value;
-      const dateEnd = document.getElementById(`dateEnd${job.id}`).value;
-      const bulletWrapperSection = job.getElementsByClassName(
-        "bulletPointsWrapper",
-      )[0];
-      console.log(bulletWrapperSection);
-      const bulletPointInputs = [
-        ...bulletWrapperSection.getElementsByTagName("input"),
-      ];
-      console.log(bulletPointInputs);
-      const bulletArray = bulletPointInputs.map((input) => input.value);
-
-      newWorkExperienceState.items.push({
-        id: job.id,
-        role: role,
-        companyName: company,
-        dateStarted: dateStart,
-        dateEnded: dateEnd,
-        bulletPoints: bulletArray,
-      });
-    });
-    console.log(newWorkExperienceState);
-    setWorkExperience(newWorkExperienceState);
+    setWorkExperience(draft);
     toggleElementVisibility("workExperienceForm");
+  }
+
+  function handleItemChange(e, index) {
+    const { name, value } = e.target;
+    setDraft((prev) => {
+      const items = prev.items.map((item, itemIndex) =>
+        itemIndex === index ? { ...item, [name]: value } : item,
+      );
+      return { ...prev, items };
+    });
+  }
+
+  function handleBulletChange(e, jobIndex, bulletIndex) {
+    const { value } = e.target;
+    setDraft((prev) => {
+      const items = prev.items.map((item, itemIndex) => {
+        if (itemIndex !== jobIndex) {
+          return item;
+        }
+        const bulletPoints = [...item.bulletPoints];
+        bulletPoints[bulletIndex] = value;
+        return { ...item, bulletPoints };
+      });
+      return { ...prev, items };
+    });
   }
 
   //probably should do display none to display flex instead of visibility
@@ -53,7 +52,7 @@ function WorkExperienceFormSection({ workExperience, setWorkExperience }) {
         onSubmit={(e) => handleSubmit(e)}
       >
         <h3>WorkExperience</h3>
-        {workExperience.items.map((job, index) => {
+        {draft.items.map((job, index) => {
           return (
             <section className="workExpSubsection" id={job.id} key={job.id}>
               <span className="basicInputWrapper">
@@ -62,34 +61,38 @@ function WorkExperienceFormSection({ workExperience, setWorkExperience }) {
                   type="text"
                   name="role"
                   id={`role${job.id}`}
-                  placeholder={job.role}
+                  value={job.role}
+                  onChange={(e) => handleItemChange(e, index)}
                 />
               </span>
               <span className="basicInputWrapper">
                 <label htmlFor={`company${job.id}`}>Company</label>
                 <input
                   type="text"
-                  name="company"
+                  name="companyName"
                   id={`company${job.id}`}
-                  placeholder={job.company}
+                  value={job.companyName}
+                  onChange={(e) => handleItemChange(e, index)}
                 />
               </span>
               <span className="basicInputWrapper">
                 <label htmlFor={`dateStart${job.id}`}>Date Start</label>
                 <input
                   type="date"
-                  name="date start"
+                  name="dateStarted"
                   id={`dateStart${job.id}`}
-                  placeholder={job.dateStarted}
+                  value={job.dateStarted}
+                  onChange={(e) => handleItemChange(e, index)}
                 />
               </span>
               <span className="basicInputWrapper">
                 <label htmlFor={`dateEnd${job.id}`}>Date End</label>
                 <input
                   type="date"
-                  name="date end"
+                  name="dateEnded"
                   id={`dateEnd${job.id}`}
-                  placeholder={job.dateEnded}
+                  value={job.dateEnded}
+                  onChange={(e) => handleItemChange(e, index)}
                 />
               </span>
               <section className="bulletPointsWrapper">
@@ -103,8 +106,11 @@ function WorkExperienceFormSection({ workExperience, setWorkExperience }) {
                       <input
                         type="text"
                         id={`bulllet${job.id}${position}`}
-                        name="bullet point"
-                        placeholder={bullet}
+                        name="bulletPoints"
+                        value={bullet}
+                        onChange={(e) =>
+                          handleBulletChange(e, index, position)
+                        }
                       />
                     </span>
                   );
