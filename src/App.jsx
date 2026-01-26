@@ -6,12 +6,12 @@ import Main from "./components/main";
 import PersonalFormSection from "./components/forms/personalFormSection";
 import data from "./components/cvData";
 import WorkExperienceFormSection from "./components/forms/workExperienceFormSection";
+import EducationFormSection from "./components/forms/educationFormSection";
 
 function App() {
   const [personalDetails, setPersonalDetails] = useState(data.personalDetails);
   const [workExperience, setWorkExperience] = useState(data.workExperience);
   const [education, setEducation] = useState(data.education);
-  console.log(workExperience);
   return (
     // can generalise form sections to create inputs according to object shape
     <>
@@ -24,6 +24,10 @@ function App() {
         <WorkExperienceFormSection
           workExperience={workExperience}
           setWorkExperience={setWorkExperience}
+        />
+        <EducationFormSection
+          education={education}
+          setEducation={setEducation}
         />
       </section>
       <Main

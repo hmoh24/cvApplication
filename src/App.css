@@ -23,14 +23,14 @@ form {
   gap: 8px;
 }
 
-form > span {
+.basicInputWrapper {
   display: flex
 }
 
-form > span > label {
+.basicInputWrapper > label {
   flex: 1;
 }
 
-form>span>input {
+.basicInputWrapper>input {
   flex: 4;
 }

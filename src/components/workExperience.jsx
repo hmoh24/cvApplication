@@ -7,6 +7,7 @@ function WorkExperience({
 }) {
   return (
     <section className="workExperience">
+      <h2>job</h2>
       <h2>{role}</h2>
       <p>{company}</p>
       <p>{dateStarted}</p>

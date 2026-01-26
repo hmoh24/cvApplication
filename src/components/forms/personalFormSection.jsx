@@ -26,7 +26,7 @@ function PersonalFormSection({ personalDetails, setPersonalDetails }) {
           toggleElementVisibility("personalForm");
         }}
       >
-        Personal Details
+        Edit Personal Details
       </button>
       <form
         action=""
@@ -34,7 +34,7 @@ function PersonalFormSection({ personalDetails, setPersonalDetails }) {
         onSubmit={(e) => handleSubmit(e)}
       >
         <h3>Personal details</h3>
-        <span>
+        <span className="basicInputWrapper">
           <label htmlFor="name">Name: </label>
           <input
             type="text"
@@ -43,7 +43,7 @@ function PersonalFormSection({ personalDetails, setPersonalDetails }) {
             placeholder={personalDetails.name}
           />
         </span>
-        <span>
+        <span className="basicInputWrapper">
           <label htmlFor="email">Email: </label>
           <input
             type="email"
@@ -52,7 +52,7 @@ function PersonalFormSection({ personalDetails, setPersonalDetails }) {
             placeholder={personalDetails.email}
           />
         </span>
-        <span>
+        <span className="basicInputWrapper">
           <label htmlFor="phone">Phone: </label>
           <input
             type="phone"
@@ -61,7 +61,7 @@ function PersonalFormSection({ personalDetails, setPersonalDetails }) {
             placeholder={personalDetails.phone}
           />
         </span>
-        <span>
+        <span className="basicInputWrapper">
           <label htmlFor="location">Location: </label>
           <input
             type="text"
