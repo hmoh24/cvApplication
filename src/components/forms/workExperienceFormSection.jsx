@@ -4,6 +4,61 @@ import toggleElementVisibility from "../../util/toggleElementVisibility";
 function WorkExperienceFormSection({ workExperience, setWorkExperience }) {
   const [draft, setDraft] = useState(workExperience);
 
+  function handleDelete(e, index) {
+    setDraft((prev) => {
+      const items = prev.items.filter((job, position) => index !== position);
+      items.forEach((job, position) => {
+        job.id = `job-${position + 1}`;
+      });
+      return { items };
+    });
+  }
+
+  function handleAddJob() {
+    setDraft((prev) => {
+      const newJob = {
+        id: `job-${prev.items.length + 1}`,
+        role: "",
+        companyName: "",
+        dateStarted: "2026-01-01",
+        dateEnded: "2026-01-02",
+        bulletPoints: ["", "", ""],
+      };
+      return { items: [...prev.items, newJob] };
+    });
+  }
+
+  function handleAddBullet(jobIndex) {
+    setDraft((prev) => {
+      const items = [...prev.items];
+      const job = { ...items[jobIndex] };
+      job.bulletPoints = [...job.bulletPoints, ""];
+      items[jobIndex] = job;
+      return {
+        items,
+      };
+    });
+  }
+
+  function handleDeleteBullet(jobIndex, bulletIndex) {
+    // e.preventDefault();
+    setDraft((prev) => {
+      return {
+        ...prev,
+        items: prev.items.map((job, index) => {
+          return jobIndex === index
+            ? {
+                ...job,
+                bulletPoints: job.bulletPoints.filter((bullet, position) => {
+                  return bulletIndex !== position;
+                }),
+              }
+            : job;
+        }),
+      };
+    });
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     setWorkExperience(draft);
@@ -55,6 +110,15 @@ function WorkExperienceFormSection({ workExperience, setWorkExperience }) {
         {draft.items.map((job, index) => {
           return (
             <section className="workExpSubsection" id={job.id} key={job.id}>
+              <span className="jobFormHeader">
+                <h4>Job {index}</h4>
+                <button
+                  onClick={(e) => handleDelete(e, index)}
+                  className="removeJob"
+                >
+                  X
+                </button>
+              </span>
               <span className="basicInputWrapper">
                 <label htmlFor={`role${job.id}`}>Job Title</label>
                 <input
@@ -108,18 +172,32 @@ function WorkExperienceFormSection({ workExperience, setWorkExperience }) {
                         id={`bulllet${job.id}${position}`}
                         name="bulletPoints"
                         value={bullet}
-                        onChange={(e) =>
-                          handleBulletChange(e, index, position)
-                        }
+                        onChange={(e) => handleBulletChange(e, index, position)}
                       />
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteBullet(index, position)}
+                        className="deleteBullet"
+                      >
+                        X
+                      </button>
                     </span>
                   );
                 })}
+                <button
+                  type="button"
+                  onClick={() => handleAddBullet(index)}
+                  className="addBullet"
+                >
+                  Add Bullet Point
+                </button>
               </section>
             </section>
           );
         })}
-
+        <button type="button" onClick={handleAddJob}>
+          Add Job
+        </button>
         <button type="submit">Submit Changes</button>
       </form>
     </section>
