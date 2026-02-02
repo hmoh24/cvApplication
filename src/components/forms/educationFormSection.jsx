@@ -4,6 +4,71 @@ import toggleElementVisibility from "../../util/toggleElementVisibility";
 function EducationFormSection({ education, setEducation }) {
   const [draft, setDraft] = useState(education);
 
+  function handleAddEducation(){
+    setDraft((prev)=>{
+      const newEducation = {
+        id: `edu-${prev.items.length + 1}`,
+        qualification: '',
+        institutionName: '',
+        dateStarted: "2017-09-01",
+        dateEnded: "2020-06-01",
+        bulletPoints: ['', '']
+      }
+
+      return {
+        items: [...prev.items, newEducation]
+      }
+    })
+  }
+
+  function handleDeleteEducation(educationIndex){
+    setDraft((prev) => {
+      const filteredCopy = prev.items.filter((education, index) => {return educationIndex !== index})
+      console.log(filteredCopy)
+      const mapped = filteredCopy.map((education, index) => {
+        return {
+          ...education,
+          id: `edu-${index}`
+        }
+      })
+      return {
+        items: mapped
+      }
+    })
+  }
+
+   function handleAddBullet(jobIndex) {
+    setDraft((prev) => {
+      const items = [...prev.items];
+      const job = { ...items[jobIndex] };
+      job.bulletPoints = [...job.bulletPoints, ""];
+      items[jobIndex] = job;
+      return {
+        items,
+      };
+    });
+  }
+
+  function handleDeleteBullet(jobIndex, bulletIndex) {
+    // e.preventDefault();
+    setDraft((prev) => {
+      return {
+        ...prev,
+        items: prev.items.map((job, index) => {
+          return jobIndex === index
+            ? {
+                ...job,
+                bulletPoints: job.bulletPoints.filter((bullet, position) => {
+                  return bulletIndex !== position;
+                }),
+              }
+            : job;
+        }),
+      };
+    });
+  }
+
+
   function handleSubmit(e) {
     e.preventDefault();
     setEducation(draft);
@@ -57,6 +122,13 @@ function EducationFormSection({ education, setEducation }) {
               key={listItem.id}
               className="educationSubsection"
             >
+              <h4>Education {index + 1}</h4>
+              <button
+                  onClick={(e) => handleDeleteEducation(index)}
+                  className="removeEducation"
+                >
+                  X
+                </button>
               <span className="basicInputWrapper">
                 <label htmlFor={`qualification${listItem.id}`}>
                   Qualification
@@ -120,13 +192,30 @@ function EducationFormSection({ education, setEducation }) {
                           handleBulletChange(e, index, position)
                         }
                       />
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteBullet(index, position)}
+                        className="deleteBullet"
+                      >
+                        X
+                      </button>
                     </span>
                   );
                 })}
+                <button
+                  type="button"
+                  onClick={() => handleAddBullet(index)}
+                  className="addBullet"
+                >
+                  Add Bullet Point
+                </button>
               </section>
             </section>
           );
         })}
+        <button type="button" onClick={handleAddEducation}>
+          Add Education
+        </button>
         <button type="submit">Submit Changes</button>
       </form>
     </section>
